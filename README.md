@@ -55,7 +55,11 @@ BeyondEarth/
 
 ## Mobile preview
 
-<img src="screenshots/mobile.png" alt="Beyond Earth on mobile" width="300">
+<p align="center">
+  <img src="screenshots/mobile.png"
+       alt="Beyond Earth on mobile"
+       width="300">
+</p>
 
 ## Notes and credits
 
