@@ -69,4 +69,4 @@ Astronomy references: [NASA — Planets](https://science.nasa.gov/solar-system/p
 
 ## Project owner
 
-[MÆKIM / Gxmrr](https://github.com/Gxmrr) · 2026
+[Gxmrr](https://github.com/Gxmrr) ! 2026
