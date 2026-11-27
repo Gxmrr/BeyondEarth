@@ -26,3 +26,11 @@ html{overflow-x:clip}.hero-visual{overflow:clip}.planet-row,.gallery-viewport{mi
 @media (prefers-reduced-motion: reduce) {
   .nav #navigation.indicator-animate .nav-indicator { transition: none; }
 }
+
+/* Compact language toggle, integrated with the existing glass navigation. */
+.nav .language-switch{font-size:11px;font-weight:650;letter-spacing:.02em;flex:0 0 34px;white-space:nowrap;display:grid;place-items:center;color:var(--fg,#eef2ff)}
+.nav .language-switch:hover{background:#ffffff25}
+.nav .language-switch:focus-visible{outline:2px solid #a9caff;outline-offset:2px}
+@media(max-width:760px){.nav .nav-motion{margin-left:0}.nav .language-switch{flex-basis:32px;width:32px;height:32px}.nav nav a{padding-inline:9px}}
+@media(max-width:380px){.nav{gap:2px;padding:4px}.nav nav a{padding-inline:7px;font-size:10px}.nav .language-switch,.nav .nav-motion{flex:0 0 29px;width:29px;height:29px}}
+html[lang="en"] .hero-v2 h1{overflow-wrap:normal}

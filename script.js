@@ -3,6 +3,226 @@ const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
 const reduced = matchMedia('(prefers-reduced-motion: reduce)');
 let motionPaused = reduced.matches;
+const translations = {
+  "Beyond Earth — интерактивное путешествие по Вселенной.": "Beyond Earth — an interactive journey through the universe.",
+  "Beyond Earth — Космос ближе, чем кажется": "Beyond Earth — Space is closer than you think",
+  "К содержанию": "Skip to content",
+  "Beyond Earth, главная": "Beyond Earth, home",
+  "Главная навигация": "Main navigation",
+  "Главная": "Home",
+  "Планеты": "Planets",
+  "Звёзды": "Stars",
+  "Галерея": "Gallery",
+  "Приостановить анимации": "Pause animations",
+  "Продолжить анимации": "Resume animations",
+  "Открыть меню": "Open menu",
+  "Закрыть меню": "Close menu",
+  "За пределами": "Beyond the",
+  "известного": "known",
+  "Космос ближе, чем кажется.": "Space is closer than you think.",
+  "Космонавт в скафандре": "Astronaut in a spacesuit",
+  "3D-модель космонавта, вращение стрелками или мышью": "3D astronaut model, rotate with arrow keys or mouse",
+  "Интерактивная 3D-модель": "Interactive 3D model",
+  "Приблизить": "Zoom in",
+  "Отдалить": "Zoom out",
+  "Сбросить": "Reset",
+  "✧ Перетащите, чтобы вращать": "✧ Drag to rotate",
+  "Начать путешествие": "Begin the journey",
+  "ПРОКРУТИТЕ, ЧТОБЫ ИССЛЕДОВАТЬ": "SCROLL TO EXPLORE",
+  "Наш адрес во Вселенной": "Our place in the universe",
+  "В бесконечном пространстве": "In the vastness of space",
+  "есть место,": "there is a place",
+  "которое мы зовём домом": "we call home",
+  "Восемь планет, одна звезда и миллиарды историй. Солнечная система — только первая глава нашего путешествия.": "Eight planets, one star and billions of stories. The Solar System is only the first chapter of our journey.",
+  "планет": "planets",
+  "4,6": "4.6",
+  "млрд": "billion",
+  "лет Солнечной системе": "years of the Solar System",
+  "звезда в нашей системе": "star in our system",
+  "Солнечная система": "Solar System",
+  "Восемь миров": "Eight worlds",
+  "Ни одного похожего": "No two alike",
+  "Выберите планету или продолжайте прокручивать. Каждый мир — отдельная история.": "Select a planet or keep scrolling. Every world has its own story.",
+  "Выбор планеты": "Choose a planet",
+  "Жизнь звёзд": "The life of stars",
+  "Даже свет": "Even light",
+  "имеет историю": "has a story",
+  "Звёзды рождаются, меняются и умирают. Их история длится миллионы и миллиарды лет.": "Stars are born, evolve and die. Their stories unfold over millions and billions of years.",
+  "Солнце": "The Sun",
+  "3D-модель Солнца": "3D model of the Sun",
+  "Наша звезда": "Our star",
+  "Гигантская сфера горячей плазмы. В её ядре водород превращается в гелий, высвобождая энергию, которая согревает Землю.": "A giant sphere of hot plasma. Hydrogen fuses into helium in its core, releasing the energy that warms Earth.",
+  "~5 500 °C": "~5,500 °C",
+  "температура поверхности": "surface temperature",
+  "~8 мин": "~8 min",
+  "путь света до Земли": "light travel time to Earth",
+  "Рождение": "Birth",
+  "Туманность": "Nebula",
+  "Облака газа и пыли сжимаются под действием гравитации, образуя новые звёзды.": "Clouds of gas and dust collapse under gravity, forming new stars.",
+  "Жизнь": "Life",
+  "Свет": "Light",
+  "В ядре звезды идут термоядерные реакции. Именно они питают её сияние.": "Nuclear fusion in a star's core powers its glow.",
+  "Эволюция": "Evolution",
+  "Новая глава": "A new chapter",
+  "Судьба звезды зависит от массы: она может стать белым карликом, нейтронной звездой или чёрной дырой.": "A star's fate depends on its mass: it may become a white dwarf, a neutron star or a black hole.",
+  "Вне привычного": "Beyond the familiar",
+  "Красота,": "Beauty",
+  "не знающая границ": "without limits",
+  "Три взгляда на далёкую Вселенную. Художественные визуализации, вдохновлённые космосом.": "Three views of the distant universe. Artistic visualizations inspired by space.",
+  "карусель": "carousel",
+  "Космическая галерея": "Space gallery",
+  "Колыбель звёзд": "Cradle of stars",
+  "Туманности — облака вещества, из которого могут рождаться новые миры.": "Nebulae are clouds of matter from which new worlds can form.",
+  "Острова света": "Islands of light",
+  "Галактики объединяют звёзды, газ, пыль и тёмную материю под действием гравитации.": "Gravity binds stars, gas, dust and dark matter together into galaxies.",
+  "Пыль бесконечности": "Dust of infinity",
+  "Вещество, из которого состоят планеты и живые существа, связано с историей звёзд.": "The matter that makes up planets and living things is connected to the history of stars.",
+  "Выбрать слайд": "Select a slide",
+  "Приостановить галерею": "Pause gallery",
+  "Продолжить галерею": "Resume gallery",
+  "Предыдущий слайд": "Previous slide",
+  "Следующий слайд": "Next slide",
+  "Конец путешествия или его начало": "The end of a journey or its beginning",
+  "Мы — часть": "We are part of",
+  "чего-то большего": "something greater",
+  "В следующий раз, когда посмотрите на небо, вспомните: каждый луч света рассказывает историю.": "Next time you look at the sky, remember that every ray of light tells a story.",
+  "Вернуться к началу ↑": "Back to the beginning ↑",
+  "Учебный интерактивный проект о космосе.": "An interactive educational project about space.",
+  "Авторские 3D-модели и UHD-визуализации. Масштабы условные.": "Original 3D models and UHD illustrations. Not to scale.",
+  "Наверх ↑": "Back to top ↑",
+  "Каменистая планета": "Rocky planet",
+  "Газовый гигант": "Gas giant",
+  "Ледяной гигант": "Ice giant",
+  "средний диаметр": "mean diameter",
+  "год на планете": "orbital period",
+  "↔ Вращайте модель": "↔ Rotate the model",
+  "Сбросить положение": "Reset view",
+  "Статичное изображение · WebGL недоступен": "Static image · WebGL unavailable",
+  "3D-превью · WebGL недоступен": "3D preview · WebGL unavailable",
+  "✧ Вращайте влево или вправо": "✧ Rotate left or right",
+  "Deep space": "Deep space",
+  "Galaxies": "Galaxies",
+  "Stellar dust": "Stellar dust",
+  "Меркурий": "Mercury",
+  "Мир крайностей.": "A world of extremes.",
+  "Ближайшая к Солнцу планета почти лишена атмосферы. Её поверхность покрыта кратерами, а день и ночь резко отличаются по температуре.": "The closest planet to the Sun has almost no atmosphere. Its cratered surface experiences dramatic temperature changes between day and night.",
+  "4 879 км": "4,879 km",
+  "88 суток": "88 days",
+  "3D-модель: Меркурий": "3D model: Mercury",
+  "Приблизить Меркурий": "Zoom in on Mercury",
+  "Отдалить Меркурий": "Zoom out from Mercury",
+  "Венера": "Venus",
+  "Красота под облаками.": "Beauty beneath the clouds.",
+  "Плотная атмосфера удерживает тепло и делает Венеру самой горячей планетой Солнечной системы. Её облака скрывают каменистую поверхность.": "A dense atmosphere traps heat, making Venus the hottest planet in the Solar System. Its clouds conceal a rocky surface.",
+  "12 104 км": "12,104 km",
+  "225 суток": "225 days",
+  "3D-модель: Венера": "3D model: Venus",
+  "Приблизить Венера": "Zoom in on Venus",
+  "Отдалить Венера": "Zoom out from Venus",
+  "Земля": "Earth",
+  "Наш единственный дом.": "Our only home.",
+  "Океаны, атмосфера и подходящая температура делают Землю уникальной. Это единственная известная нам планета, на которой существует жизнь.": "Oceans, an atmosphere and suitable temperatures make Earth unique. It is the only planet known to support life.",
+  "12 742 км": "12,742 km",
+  "365 суток": "365 days",
+  "3D-модель: Земля": "3D model: Earth",
+  "Приблизить Земля": "Zoom in on Earth",
+  "Отдалить Земля": "Zoom out from Earth",
+  "Марс": "Mars",
+  "Следующий горизонт.": "The next horizon.",
+  "Красный цвет Марса связан с оксидами железа. Здесь есть огромные вулканы, каньоны и следы древних водоёмов.": "Iron oxides give Mars its red color. It is home to enormous volcanoes, canyons and traces of ancient bodies of water.",
+  "6 779 км": "6,779 km",
+  "687 суток": "687 days",
+  "3D-модель: Марс": "3D model: Mars",
+  "Приблизить Марс": "Zoom in on Mars",
+  "Отдалить Марс": "Zoom out from Mars",
+  "Юпитер": "Jupiter",
+  "Гигант среди миров.": "A giant among worlds.",
+  "Самая большая планета Солнечной системы. Её атмосфера состоит преимущественно из водорода и гелия, а Большое Красное Пятно — гигантский шторм.": "The largest planet in the Solar System. Its atmosphere is mostly hydrogen and helium, and the Great Red Spot is a gigantic storm.",
+  "139 820 км": "139,820 km",
+  "11,9 года": "11.9 years",
+  "3D-модель: Юпитер": "3D model: Jupiter",
+  "Приблизить Юпитер": "Zoom in on Jupiter",
+  "Отдалить Юпитер": "Zoom out from Jupiter",
+  "Сатурн": "Saturn",
+  "Искусство гравитации.": "The art of gravity.",
+  "Сатурн знаменит системой колец из частиц льда и камня. Это газовый гигант, окружённый множеством спутников.": "Saturn is famous for its rings of ice and rock. This gas giant is surrounded by numerous moons.",
+  "116 460 км": "116,460 km",
+  "29,4 года": "29.4 years",
+  "3D-модель: Сатурн": "3D model: Saturn",
+  "Приблизить Сатурн": "Zoom in on Saturn",
+  "Отдалить Сатурн": "Zoom out from Saturn",
+  "Уран": "Uranus",
+  "Мир, лежащий на боку.": "A world on its side.",
+  "Ледяной гигант с необычным наклоном оси. Метан в атмосфере придаёт ему характерный голубовато-зелёный оттенок.": "An ice giant with an unusual axial tilt. Methane in its atmosphere gives it a distinctive blue-green color.",
+  "50 724 км": "50,724 km",
+  "84 года": "84 years",
+  "3D-модель: Уран": "3D model: Uranus",
+  "Приблизить Уран": "Zoom in on Uranus",
+  "Отдалить Уран": "Zoom out from Uranus",
+  "Нептун": "Neptune",
+  "На краю солнечного света.": "At the edge of sunlight.",
+  "Самая далёкая из восьми планет. В холодной атмосфере этого ледяного гиганта бушуют невероятно быстрые ветры.": "The farthest of the eight planets. Incredibly fast winds sweep through this ice giant's cold atmosphere.",
+  "49 244 км": "49,244 km",
+  "165 лет": "165 years",
+  "3D-модель: Нептун": "3D model: Neptune",
+  "Приблизить Нептун": "Zoom in on Neptune",
+  "Отдалить Нептун": "Zoom out from Neptune",
+  "Слайд 1": "Slide 1",
+  "Слайд 2": "Slide 2",
+  "Слайд 3": "Slide 3"
+};
+let language = 'ru';
+function t(value) { return language === 'en' ? (translations[value] ?? value) : value; }
+const localizedNodes = [];
+function captureTranslations() {
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  let node;
+  while ((node = walker.nextNode())) {
+    if (node.parentElement.closest('script, style, #gallery-count, .drag-label, .planet-drag')) continue;
+    const raw = node.nodeValue, key = raw.trim();
+    if (Object.prototype.hasOwnProperty.call(translations,key)) {
+      localizedNodes.push({node, ru:raw, en:raw.replace(key,translations[key])});
+    }
+  }
+  document.querySelectorAll('[aria-label], [alt], [title], [aria-roledescription], meta[name="description"]').forEach(element => {
+    for (const attr of ['aria-label','alt','title','aria-roledescription','content']) {
+      const ru = element.getAttribute(attr);
+      if (ru && Object.prototype.hasOwnProperty.call(translations,ru)) localizedNodes.push({element,attr,ru,en:translations[ru]});
+    }
+  });
+  localizedNodes.push({element:document,attr:'title',ru:document.title,en:translations[document.title]});
+}
+function applyLanguage(next) {
+  for (const counter of runningCounters) counter.node.nodeValue = counter.original;
+  runningCounters.clear();
+  language = next === 'en' ? 'en' : 'ru';
+  document.documentElement.lang = language;
+  for (const item of localizedNodes) {
+    const value = item[language];
+    if (item.node) item.node.nodeValue = value;
+    else if (item.element === document) document.title = value;
+    else item.element.setAttribute(item.attr,value);
+  }
+  const toggle = $('#language-switch');
+  toggle.textContent = language === 'ru' ? 'EN' : 'RU';
+  toggle.title = language === 'ru' ? 'Switch to English' : 'Переключить на русский';
+  toggle.setAttribute('aria-label',toggle.title);
+  menu.setAttribute('aria-label',t(menu.getAttribute('aria-expanded') === 'true' ? 'Закрыть меню' : 'Открыть меню'));
+  const motion = $('#motion');
+  motion.title = t(motionPaused ? 'Продолжить анимации' : 'Приостановить анимации');
+  motion.setAttribute('aria-label',motion.title);
+  updateGalleryButton();
+  updateGalleryCount();
+  const astroStatus = $('.astro-view').dataset.ready;
+  $('.drag-label').textContent = t(astroStatus === 'fallback' ? '3D-превью · WebGL недоступен' : astroStatus === 'software' ? '✧ Вращайте влево или вправо' : '✧ Перетащите, чтобы вращать');
+  $('.planet-art').forEach(art => {
+    art.querySelector('.planet-drag').textContent = t(art.querySelector('.planet-view').dataset.ready === 'fallback' ? 'Статичное изображение · WebGL недоступен' : '↔ Вращайте модель');
+  });
+  try { localStorage.setItem('beyond-earth-language',language); } catch (_) {}
+  scrollDirty = true;
+  requestAnimationFrame(() => { updateNavIndicator(); positionGallery(); });
+}
+
 const planets = [
  ['mercury','Меркурий','Мир крайностей.','Ближайшая к Солнцу планета почти лишена атмосферы. Её поверхность покрыта кратерами, а день и ночь резко отличаются по температуре.','4 879 км','88 суток','#b5aaa1'],
  ['venus','Венера','Красота под облаками.','Плотная атмосфера удерживает тепло и делает Венеру самой горячей планетой Солнечной системы. Её облака скрывают каменистую поверхность.','12 104 км','225 суток','#f2bf83'],
@@ -26,16 +246,17 @@ function createCounter(element) {
   const node = [...element.childNodes].find(n => n.nodeType === Node.TEXT_NODE && /\d/.test(n.nodeValue));
   if (!node) return null;
   const original = node.nodeValue;
-  const match = original.match(/^(\s*~?\s*)(\d+(?:[ \u00a0\u202f]\d{3})*(?:,\d+)?)([\s\S]*)$/);
+  const match = original.match(language === 'en' ? /^(\s*~?\s*)(\d+(?:,\d{3})*(?:\.\d+)?)([\s\S]*)$/ : /^(\s*~?\s*)(\d+(?:[ \u00a0\u202f]\d{3})*(?:,\d+)?)([\s\S]*)$/);
   if (!match) return null;
   const [, prefix, number, suffix] = match;
-  const target = Number(number.replace(/[ \u00a0\u202f]/g, '').replace(',', '.'));
+  const target = Number(language === 'en' ? number.replace(/,/g,'') : number.replace(/[ \u00a0\u202f]/g,'').replace(',','.'));
   if (!Number.isFinite(target)) return null;
-  const decimals = number.includes(',') ? number.split(',')[1].length : 0;
-  const formatter = new Intl.NumberFormat('ru-RU', {
+  const decimal = language === 'en' ? '.' : ',';
+  const decimals = number.includes(decimal) ? number.split(decimal)[1].length : 0;
+  const formatter = new Intl.NumberFormat(language === 'en' ? 'en-US' : 'ru-RU', {
     minimumFractionDigits: decimals,
     maximumFractionDigits: decimals,
-    useGrouping: /[ \u00a0\u202f]/.test(number)
+    useGrouping: language === 'en' ? number.includes(',') : /[ \u00a0\u202f]/.test(number)
   });
   element.style.fontVariantNumeric = 'tabular-nums';
   return {node, original, prefix, suffix, target, formatter, started: 0};
@@ -74,7 +295,7 @@ if ('IntersectionObserver' in window) {
 // Reveal content only after JS is available; the layout remains readable without motion.
 document.documentElement.classList.add('js');
 const revealObserver=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revealObserver.unobserve(e.target);}}),{threshold:.12});$$('.reveal').forEach(el=>revealObserver.observe(el));
-const menu=$('.menu');menu.addEventListener('click',()=>{let open=menu.getAttribute('aria-expanded')!=='true';menu.setAttribute('aria-expanded',open);menu.setAttribute('aria-label',open?'Закрыть меню':'Открыть меню');$('#navigation').classList.toggle('open',open);});$$('#navigation a').forEach(a=>a.addEventListener('click',()=>{menu.setAttribute('aria-expanded','false');menu.setAttribute('aria-label','Открыть меню');$('#navigation').classList.remove('open');}));
+const menu=$('.menu');menu.addEventListener('click',()=>{let open=menu.getAttribute('aria-expanded')!=='true';menu.setAttribute('aria-expanded',open);menu.setAttribute('aria-label',t(open?'Закрыть меню':'Открыть меню'));$('#navigation').classList.toggle('open',open);});$$('#navigation a').forEach(a=>a.addEventListener('click',()=>{menu.setAttribute('aria-expanded','false');menu.setAttribute('aria-label',t('Открыть меню'));$('#navigation').classList.remove('open');}));
 // One shared highlight slides between navigation links.
 const navigation = $('#navigation');
 const navIndicator = document.createElement('span');
@@ -104,10 +325,11 @@ starResize();window.addEventListener('resize',starResize);
 const track=$('#gallery-track'),cards=$$('.gallery-card'),dots=$('#gallery-dots');let slide=0,elapsed=0,galleryPaused=reduced.matches,galleryVisible=false;const duration=6500;
 const dotButtons=cards.map((_,i)=>{let b=document.createElement('button');b.className='dot';b.type='button';b.setAttribute('aria-label',`Слайд ${i+1}`);b.addEventListener('click',()=>showSlide(i));dots.append(b);return b;});
 function positionGallery(){track.style.transform=`translateX(-${slide*(cards[0].getBoundingClientRect().width+18)}px)`;}
-function showSlide(i){slide=(i+cards.length)%cards.length;elapsed=0;positionGallery();$('#gallery-count').textContent=`${slide+1} из ${cards.length}`;dotButtons.forEach((b,j)=>{b.classList.toggle('active',slide===j);b.style.setProperty('--progress','0');b.setAttribute('aria-pressed',String(slide===j));});cards.forEach((c,j)=>c.setAttribute('aria-hidden',String(j!==slide)));}
-function updateGalleryButton(){const paused=galleryPaused||motionPaused;$('#gallery-pause').textContent=paused?'▶':'Ⅱ';$('#gallery-pause').setAttribute('aria-label',paused?'Продолжить галерею':'Приостановить галерею');}
+function updateGalleryCount(){ $('#gallery-count').textContent = language === 'en' ? `${slide+1} of ${cards.length}` : `${slide+1} из ${cards.length}`; }
+function showSlide(i){slide=(i+cards.length)%cards.length;elapsed=0;positionGallery();updateGalleryCount();dotButtons.forEach((b,j)=>{b.classList.toggle('active',slide===j);b.style.setProperty('--progress','0');b.setAttribute('aria-pressed',String(slide===j));});cards.forEach((c,j)=>c.setAttribute('aria-hidden',String(j!==slide)));}
+function updateGalleryButton(){const paused=galleryPaused||motionPaused;$('#gallery-pause').textContent=paused?'▶':'Ⅱ';$('#gallery-pause').setAttribute('aria-label',t(paused?'Продолжить галерею':'Приостановить галерею'));}
 $('#gallery-pause').addEventListener('click',()=>{if(motionPaused){setMotion(false);galleryPaused=false;}else galleryPaused=!galleryPaused;updateGalleryButton();});$('#prev').addEventListener('click',()=>showSlide(slide-1));$('#next').addEventListener('click',()=>showSlide(slide+1));window.addEventListener('resize',positionGallery);let swipeX=0;$('.gallery-viewport').addEventListener('touchstart',e=>swipeX=e.touches[0].clientX,{passive:true});$('.gallery-viewport').addEventListener('touchend',e=>{let delta=e.changedTouches[0].clientX-swipeX;if(Math.abs(delta)>45)showSlide(slide+(delta<0?1:-1));},{passive:true});new IntersectionObserver(([e])=>galleryVisible=e.isIntersecting,{threshold:.25}).observe($('.gallery-viewport'));showSlide(0);
-function setMotion(paused){motionPaused=paused;document.documentElement.classList.toggle('paused',paused);const b=$('#motion');b.setAttribute('aria-label',paused?'Продолжить анимации':'Приостановить анимации');b.title=b.getAttribute('aria-label');b.innerHTML=paused?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m8 5 11 7-11 7Z"/></svg>':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 5v14M15 5v14"/></svg>';updateGalleryButton();scrollDirty=true;}
+function setMotion(paused){motionPaused=paused;document.documentElement.classList.toggle('paused',paused);const b=$('#motion');b.setAttribute('aria-label',t(paused?'Продолжить анимации':'Приостановить анимации'));b.title=b.getAttribute('aria-label');b.innerHTML=paused?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m8 5 11 7-11 7Z"/></svg>':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 5v14M15 5v14"/></svg>';updateGalleryButton();scrollDirty=true;}
 $('#motion').addEventListener('click',()=>setMotion(!motionPaused));reduced.addEventListener('change',e=>setMotion(e.matches));setMotion(motionPaused);
 let last=performance.now(),starTick=0;
 function frame(now){updateCounters(now);const dt=Math.min(50,now-last);last=now;if(scrollDirty){scrollUpdate();scrollDirty=false;if(motionPaused)drawStars(0);}if(!document.hidden){if(!motionPaused&&now-starTick>35){drawStars(now);starTick=now;}if(galleryVisible&&!galleryPaused&&!motionPaused){elapsed+=dt;if(elapsed>=duration)showSlide(slide+1);dotButtons[slide].style.setProperty('--progress',String(elapsed/duration));}}requestAnimationFrame(frame);}requestAnimationFrame(frame);
@@ -115,3 +337,10 @@ function frame(now){updateCounters(now);const dt=Math.min(50,now-last);last=now;
 let wheelTarget=null,wheelFrame=0;function stopWheel(){if(wheelFrame)cancelAnimationFrame(wheelFrame);wheelFrame=0;wheelTarget=null;}
 function smoothStep(){if(wheelTarget===null)return;const delta=wheelTarget-scrollY;if(Math.abs(delta)<1){window.scrollTo({top:wheelTarget,behavior:'instant'});stopWheel();return;}window.scrollTo({top:scrollY+delta*.16,behavior:'instant'});wheelFrame=requestAnimationFrame(smoothStep);}
 window.addEventListener('wheel',e=>{if(motionPaused||e.ctrlKey||e.metaKey||e.shiftKey||Math.abs(e.deltaX)>Math.abs(e.deltaY)||e.deltaMode!==0||e.target.closest('.planet-picker'))return;e.preventDefault();wheelTarget=Math.max(0,Math.min(document.documentElement.scrollHeight-innerHeight,(wheelTarget??scrollY)+e.deltaY));if(!wheelFrame)wheelFrame=requestAnimationFrame(smoothStep);},{passive:false});['touchstart','pointerdown','keydown'].forEach(n=>window.addEventListener(n,stopWheel,{passive:true}));
+
+// Preserve the chosen language without recreating models or resetting the scroll position.
+captureTranslations();
+let savedLanguage = 'ru';
+try { savedLanguage = localStorage.getItem('beyond-earth-language') || 'ru'; } catch (_) {}
+applyLanguage(savedLanguage);
+$('#language-switch').addEventListener('click',()=>applyLanguage(language === 'ru' ? 'en' : 'ru'));
