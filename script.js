@@ -215,7 +215,7 @@ function applyLanguage(next) {
   updateGalleryCount();
   const astroStatus = $('.astro-view').dataset.ready;
   $('.drag-label').textContent = t(astroStatus === 'fallback' ? '3D-превью · WebGL недоступен' : astroStatus === 'software' ? '✧ Вращайте влево или вправо' : '✧ Перетащите, чтобы вращать');
-  $('.planet-art').forEach(art => {
+  document.querySelectorAll('.planet-art').forEach(art => {
     art.querySelector('.planet-drag').textContent = t(art.querySelector('.planet-view').dataset.ready === 'fallback' ? 'Статичное изображение · WebGL недоступен' : '↔ Вращайте модель');
   });
   try { localStorage.setItem('beyond-earth-language',language); } catch (_) {}
@@ -342,5 +342,5 @@ window.addEventListener('wheel',e=>{if(motionPaused||e.ctrlKey||e.metaKey||e.shi
 captureTranslations();
 let savedLanguage = 'ru';
 try { savedLanguage = localStorage.getItem('beyond-earth-language') || 'ru'; } catch (_) {}
-applyLanguage(savedLanguage);
 $('#language-switch').addEventListener('click',()=>applyLanguage(language === 'ru' ? 'en' : 'ru'));
+applyLanguage(savedLanguage);
